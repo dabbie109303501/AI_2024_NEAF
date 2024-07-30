@@ -6,32 +6,51 @@ from scipy.spatial import distance     ## calculate the distance between two poi
 
 
 ## first part : load dataset(very famous called iris)
-"""
-your code
-"""
+iris=datasets.load_iris()
+iris_data=iris.data
+iris_label=iris.target
+
 
 ## second part : choose the label that we want (can be based on your preference)
-"""
-your code
-"""
+column=[1,2]
+iris_data=iris_data[:,column]
 
 ## third part : plot the distribution of data
-"""
-your code
-"""
+for i in range(len(iris_data)):
+    match iris_label[i]:
+        case 0:
+            plt.scatter(iris_data[i,0],iris_data[i,1],color="red",s=50,alpha=0.6)
+        case 1:
+            plt.scatter(iris_data[i,0],iris_data[i,1],color="green",s=50,alpha=0.6)
+        case 2:
+            plt.scatter(iris_data[i,0],iris_data[i,1],color="blue",s=50,alpha=0.6)
+#plt.show()
 
 ## forth part : the principle of KNN
-"""
-your code 
+K=5
+class_num=2
+class_count=[0,0,0]
+test_point=[3,2]
+dis_array=[]
+for i in range(len(iris_data)):
+    dst=distance.euclidean(test_point,iris_data[i,:])
+    dis_array.append(dst)
 
-1. determine the value of K, the category of data, and the test point
-2. calculate the distance between the test point and all data
-3. find the top k nearest data
-4. select the categories with the most votes
-"""
+idx_sort=np.argsort(dis_array)[0:K]
+for i in range(K):
+    label=iris_label[idx_sort[i]]
+    class_count[label]+=1
+result=np.argsort(class_count)[-1]
+print(result)
 
 ## fifth part : plot the test point
 
-"""
-your code
-"""
+match result:
+    case 0:
+        plt.scatter(test_point[0],test_point[1],color="red",s=150,alpha=1,marker="^")
+    case 1:
+        plt.scatter(test_point[0],test_point[1],color="green",s=150,alpha=1,marker="^")
+    case 2:
+        plt.scatter(test_point[0],test_point[1],color="blue",s=150,alpha=1,marker="^")
+
+plt.show()
