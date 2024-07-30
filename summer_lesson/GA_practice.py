@@ -13,7 +13,6 @@ num = 2
 ans_x = np.random.rand()
 ans_y = np.random.rand()
 population = np.random.rand(chromosome,gene_num)
-print(population)
 
 ## second part : doing mutation and crossover based on probability
 iteration=20
@@ -42,12 +41,12 @@ for lter in range(iteration):
     if distance[s]<dis:
         dis=distance[s]
         best=[population[s,0],population[s,1]]
-
+    print("1",population)
     dist=np.copy(np.argsort(distance))
     for n in range(num):
         population[dist[chromosome-1-n],0]=population[dist[n],0]
         population[dist[chromosome-1-n],1]=population[dist[n],1]
-
+    print("2",population)
     plt.clf()
     plt.scatter(ans_x,ans_y,marker="*",color="r",s=100,alpha=1)
     plt.scatter(population[0:chromosome,0],population[0:chromosome,1],marker="o",color="b",s=60,alpha=0.3)
